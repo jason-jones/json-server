@@ -11,6 +11,10 @@ low._.createId = utils.createId
 
 var server = express()
 
+var apiPrefix = server.get('apiPrefix') || process.env.API_PREFIX || ''
+
+server.set('apiPrefix', apiPrefix)
+
 server.set('port', process.env.PORT || 3000)
 server.use(express.logger('dev'))
 server.use(express.json())
@@ -30,17 +34,17 @@ if ('development' == server.get('env')) {
   server.use(express.errorHandler());
 }
 
-server.get(   '/db'                          , routes.db)
-server.get(   '/:resource'                   , routes.list)
-server.get(   '/:parent/:parentId/:resource' , routes.list)
-server.get(   '/:resource/:id'               , routes.show)
+server.get(   apiPrefix + '/db'                          , routes.db)
+server.get(   apiPrefix + '/:resource'                   , routes.list)
+server.get(   apiPrefix + '/:parent/:parentId/:resource' , routes.list)
+server.get(   apiPrefix + '/:resource/:id'               , routes.show)
 
-server.post(  '/:resource'                   , routes.create)
+server.post(  apiPrefix + '/:resource'                   , routes.create)
 
-server.put(   '/:resource/:id'               , routes.update)
-server.patch( '/:resource/:id'               , routes.update)
+server.put(   apiPrefix + '/:resource/:id'               , routes.update)
+server.patch( apiPrefix + '/:resource/:id'               , routes.update)
 
-server.delete('/:resource/:id'               , routes.destroy)
+server.delete(apiPrefix + '/:resource/:id'               , routes.destroy)
 
 server.low = low
 
