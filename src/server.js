@@ -11,7 +11,7 @@ low._.createId = utils.createId
 
 var server = express()
 
-var apiPrefix = server.get('apiPrefix') || process.env.API_PREFIX || ''
+var apiPrefix = process.env.API_PREFIX || ''
 
 server.set('apiPrefix', apiPrefix)
 
